@@ -42,9 +42,15 @@
     <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
+    <!--
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.organization>corona-warn-app</sonar.organization>
     <sonar.projectKey>${sonar.organization}_cwa-${project.artifactId}</sonar.projectKey>
+    -->
+
+    <!-- Use local demo SonarQube server with the given credentials -->
+    <sonar.login>admin</sonar.login>
+    <sonar.password>password</sonar.password>
 
     <!-- https://spring.io/projects/spring-boot -->
     <spring-boot.version>2.5.3</spring-boot.version>
@@ -568,6 +574,29 @@
 
     <!-- plugin executions for ALL sub modules -->
     <plugins>
+      <plugin>
+        <groupId>com.buschmais.jqassistant</groupId>
+        <artifactId>jqassistant-maven-plugin</artifactId>
+        <version>1.10.1</version>
+        <executions>
+          <execution>
+            <id>default-cli</id>
+            <goals>
+              <goal>scan</goal>
+              <goal>analyze</goal>
+            </goals>
+            <configuration>
+              <groups>
+                <!-- Activate ADR rules located in jqassistant/index.adoc -->
+                <group>adr</group>
+                <!-- Activate rules provided by jQA Spring Plugin -->
+                <group>spring-boot:Strict</group>
+              </groups>
+              <failOnSeverity>CRITICAL</failOnSeverity>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>

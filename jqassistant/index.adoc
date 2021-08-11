@@ -1,0 +1,29 @@
+:toc: left
+
+= CWA Server
+
+== jQA Summary
+
+include::jQA:Summary[]
+
+[[adr]]
+[role=group,includesConcepts="adr:*"]
+== Architecture Decision Records
+
+[[adr:GeneratedType]]
+[source,cypher,role=concept,providesConcepts="java:GeneratedType",verify=aggregation]
+.Mark generated Java types with `Generated`.
+----
+MATCH
+  (t:Type)
+WHERE
+  t.fqn starts with "app.coronawarn.server.common.protocols"
+SET
+  t:Generated
+RETURN
+  count(t) as GeneratedTypes
+----
+
+== Imported Rules
+
+include::jQA:ImportedRules[]
